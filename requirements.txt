@@ -1,0 +1,8 @@
+django-custom-user
+django==2.*
+requests
+psycopg2
+psycopg2-binary
+pillow
+django-cors-headers
+django-markdown-filter
