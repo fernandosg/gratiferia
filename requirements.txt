@@ -1,5 +1,5 @@
+django>=2.0.8
 django-custom-user
-django==2.*
 requests
 psycopg2
 psycopg2-binary
