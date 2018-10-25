@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views import View
 from django.contrib import messages
 from .forms import ProductForm, ImageForm
-from .models import Product
+from .models import Product, ImageProduct
 from apps.users.models import User
 
 # Create your views here.
@@ -37,3 +37,30 @@ class ProductEditView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, "", locals())
+
+
+class ProductImageCreateView(View):
+
+    @property
+    def slug(self):
+        if "slug" in self.kwargs:
+            return self.kwargs["slug"]
+        return None
+
+    def get(self, request, *args, **kwargs):
+        product = Product.objects.filter(slug=self.slug).first()
+        return render(request, "products/images/create.html", locals())
+
+    def post(self, request, *args, **kwargs):
+        product = Product.objects.filter(slug=self.slug).first()
+        post = request.POST.copy()
+        form = ImageForm(post, request.FILES)
+        if form.is_valid():
+            image = form.save()
+            ImageProduct.objects.create(image=image, product=product)
+            return redirect(reverse("product_detail", kwargs={"slug": product.slug}))
+        else:
+            for e in form.errors:
+                print(e)
+                messages.error(request, e)
+        return render(request, "products/images/create.html", locals())

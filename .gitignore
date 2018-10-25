@@ -2,3 +2,5 @@
 __pycache__
 static/media
 db.sqlite3
+
+product_images/
