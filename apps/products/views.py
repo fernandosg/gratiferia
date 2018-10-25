@@ -5,6 +5,8 @@ from django.contrib import messages
 from .forms import ProductForm, ImageForm
 from .models import Product, ImageProduct
 from apps.users.models import User
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class ProductDetailView(View):
@@ -17,10 +19,12 @@ class ProductDetailView(View):
 
 class ProductCreateView(View):
 
+    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = ProductForm()
         return render(request, "products/create.html", locals())
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         post = request.POST.copy()
         form = ProductForm(post)
@@ -49,10 +53,12 @@ class ProductImageCreateView(View):
             return self.kwargs["slug"]
         return None
 
+    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         product = Product.objects.filter(slug=self.slug).first()
         return render(request, "products/images/create.html", locals())
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         product = Product.objects.filter(slug=self.slug).first()
         post = request.POST.copy()
