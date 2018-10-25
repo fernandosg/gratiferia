@@ -11,6 +11,8 @@ class ProductDetailView(View):
 
     def get(self, request, *args, **kwargs):
         product = Product.objects.filter(slug=kwargs["slug"]).first()
+        for image in product.product_images.all():
+            print(image.image.file.url)
         return render(request, "products/detail.html", locals())
 
 class ProductCreateView(View):

@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
   <p>{{product.name}}</p>
+  {% for image in product.product_images.all %}
+    <p>
+      <img src="{{image.image.file.url}}" style="max-width:300px;" />
+    </p>
+  {% endfor %}
 {% endblock %}
