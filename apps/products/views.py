@@ -3,10 +3,11 @@ from django.urls import reverse
 from django.views import View
 from django.contrib import messages
 from .forms import ProductForm, ImageForm
-from .models import Product, ImageProduct
+from .models import Product, ImageProduct, RequestProduct
 from apps.users.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 class ProductDetailView(View):
@@ -15,6 +16,29 @@ class ProductDetailView(View):
         product = Product.objects.filter(slug=kwargs["slug"]).first()
         for image in product.product_images.all():
             print(image.image.file.url)
+        return render(request, "products/detail.html", locals())
+
+
+class ProductRequestView(View):
+
+    @property
+    def slug(self):
+        if "slug" in self.kwargs:
+            return self.kwargs["slug"]
+        return None
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        if self.slug is None:
+            return HttpResponseForbidden()
+        product = Product.objects.filter(slug=self.slug).first()
+        if RequestProduct.objects.filter(product=product, user=request.user).exists():
+            messages.error(request, "Ya has solicitado este producto")
+        if product.is_not_available():
+            messages.error(request, "Este producto no esta disponible para solicitar")
+        else:
+            RequestProduct.objects.create(product=product, user=request.user)
+            messages.success(request, "Producto solicitado con éxito")
         return render(request, "products/detail.html", locals())
 
 class ProductCreateView(View):

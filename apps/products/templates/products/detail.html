@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
   <p>{{product.name}}</p>
+  <p><a href="{% url 'product_request' slug=product.slug %}">Solicitar</a></p>
   {% for image in product.product_images.all %}
     <p>
       <img src="{{image.image.file.url}}" style="max-width:300px;" />

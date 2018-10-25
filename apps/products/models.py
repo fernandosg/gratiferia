@@ -22,6 +22,8 @@ class Product(models.Model):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    def is_not_available(self):
+        return self.status != "available"
 
 class Image(models.Model):
     file = models.ImageField(upload_to="product_images/")
@@ -36,3 +38,13 @@ class ReportProduct(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
+
+
+class RequestProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="requests_product")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests_users")
+
+    def save(self, *args, **kwargs):
+        self.product.status = "requested_not_confirmed"
+        self.product.save()
+        super().save(*args, **kwargs)
