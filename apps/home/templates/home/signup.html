@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <form method="post" action="">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Escribe el email" />
+    <input type="password" name="password" placeholder="Escribe la contraseña" />
+    <input type="password" name="password2" placeholder="Confirma la contraseña" />
+    <input type="text" name="name" placeholder="Escribe tu nombre" />
+    <input type="text" name="first_last_name" placeholder="Escribe tu apellido paterno" />
+    <input type="text" name="second_last_name" placeholder="Escribe tu apellido materno" />
+    <input type="submit" value="Entrar"/>
+  </form>
+{% endblock %}
