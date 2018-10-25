@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'custom_user',
     'apps.products',
     'apps.users',
-    'apps.home'
+    'apps.home',
+    'apps.inbox',
+    'apps.panel',
 ]
 
 MIDDLEWARE = [
