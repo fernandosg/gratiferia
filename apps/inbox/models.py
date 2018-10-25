@@ -19,7 +19,7 @@ class Message(models.Model):
             self.save()
 
 class ResponseMessage(models.Model):
-    parent_message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="parent_message")
+    parent_message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="response_message")
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="from_user_response_message")
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="to_user_response_message")
     open = models.BooleanField(default=False)

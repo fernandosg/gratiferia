@@ -11,4 +11,4 @@ class MessageForm(ModelForm):
 class ResponseMessageForm(ModelForm):
     class Meta:
         model = ResponseMessage
-        fields = ("content", "from_user", "to_user")
+        fields = ("content",)
