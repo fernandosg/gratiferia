@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <p>{{request_product.product.title}}</p>
+  <p>{{request_product.product.status}}</p>
+  {% if request_product.product.status == 'requested_not_confirmed' %}
+    <p>Un usuario ha solicitado el producto, el dueño del producto deberá de confirmar si es posible la entrega del producto</p>
+  {% endif %}
+  {% if request_product.product.status == 'requested_confirmed' %}
+    <p>El dueño del producto ha confirmado la posibilidad de entrega del producto, en espera a que el usuario y el dueño se pongan en contacto para la recepción del producto</p>
+  {% endif %}
+  {% if request_product.product.status == 'requested_deliver' %}
+    <p>El dueño ha entregado el producto</p>
+  {% endif %}
+  {% if request_product.product.status == 'requested_not_confirmed' and request_product.product.author.id == request.user.id %}
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action_request" value="confirm_deliver">
+      <input type="submit" value="Confirmar proceso de entrega"/>
+    </form>
+  {% elif request_product.product.status == 'requested_confirmed' and request_product.user.id == request.user.id %}
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action_request" value="confirm_received" />
+      <input type="submit" value="Confirmar recepción del producto"/>
+      <p>Confirmar la entrega del producto</p>
+    </form>
+  {% endif %}
+{% endblock %}

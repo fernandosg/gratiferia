@@ -25,6 +25,14 @@ class Product(models.Model):
     def is_not_available(self):
         return self.status != "available"
 
+    def confirm_deliver(self):
+        self.status = "requested_confirmed"
+        self.save()
+
+    def confirm_received(self):
+        self.status = "requested_deliver"
+        self.save()
+
 class Image(models.Model):
     file = models.ImageField(upload_to="product_images/")
 
@@ -43,8 +51,3 @@ class ReportProduct(models.Model):
 class RequestProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="requests_product")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests_users")
-
-    def save(self, *args, **kwargs):
-        self.product.status = "requested_not_confirmed"
-        self.product.save()
-        super().save(*args, **kwargs)

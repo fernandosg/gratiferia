@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from django.http import HttpResponseForbidden
 from apps.inbox.models import Message, ResponseMessage
 from apps.inbox.forms import MessageForm, ResponseMessageForm
 from apps.users.models import User
+from apps.products.models import Product, RequestProduct
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -75,3 +77,46 @@ class MessageCreateView(View):
                 print(e)
                 messages.error(request, e)
         return render(request, "panel/inbox/create.html", locals())
+
+
+class RequestsProductReceivedView(View):
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        requests_product = RequestProduct.objects.filter(user__id=request.user.id).all()
+        print(requests_product)
+        return render(request, "panel/requests/received.html", locals())
+
+
+class RequestsProductDetailView(View):
+
+    @property
+    def id(self):
+        if "id" in self.kwargs:
+            return self.kwargs["id"]
+        return None
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        request_product = RequestProduct.objects.filter(id=self.id).first()
+        if request_product.user.id != request.user.id and request_product.product.author.id != request.user.id:
+            return HttpResponseForbidden()
+        return render(request, "panel/requests/detail.html", locals())
+
+    def _confirm_deliver(self, post, request_product):
+        request_product.product.confirm_deliver()
+
+    def _confirm_received(self, post, request_product):
+        request_product.product.confirm_received()
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        post = request.POST.copy()
+        request_product = RequestProduct.objects.filter(id=self.id).first()
+        if request_product.user.id != request.user.id and request_product.product.author.id != request.user.id:
+            return HttpResponseForbidden()
+        if post["action_request"] == "confirm_deliver" and request_product.product.author.id == request.user.id:
+            self._confirm_deliver(post, request_product)
+        elif post["action_request"] == "confirm_received" and request_product.user.id == request.user.id:
+            self._confirm_received(post, request_product)
+        return render(request, "panel/requests/detail.html", locals())

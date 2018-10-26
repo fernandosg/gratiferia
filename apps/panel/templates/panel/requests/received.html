@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% for request in requests_product %}
+    <p><a href="{% url 'requests_product_detail' id=request.id %}">{{request.product.name}}</a></p>
+  {% endfor %}
+{% endblock %}
