@@ -29,6 +29,11 @@ class Product(models.Model):
         self.status = "requested_confirmed"
         self.save()
 
+    def request_product(self):
+        if self.status == "available":
+            self.status = "requested_not_confirmed"
+            self.save()
+
     def confirm_received(self):
         self.status = "requested_deliver"
         self.save()

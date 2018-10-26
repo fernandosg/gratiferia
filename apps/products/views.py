@@ -37,7 +37,8 @@ class ProductRequestView(View):
         if product.is_not_available():
             messages.error(request, "Este producto no esta disponible para solicitar")
         else:
-            RequestProduct.objects.create(product=product, user=request.user)
+            request = RequestProduct.objects.create(product=product, user=request.user)
+            request.product.request_product()
             messages.success(request, "Producto solicitado con éxito")
         return render(request, "products/detail.html", locals())
 
