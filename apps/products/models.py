@@ -14,6 +14,7 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    contact = models.TextField(verbose_name="Datos de contacto. Puedes escribir una dirección incluyendo número telefónico, o solo el número telefónico. Esta información será visible y se le enviara a la persona que hayas aceptado entregarle el producto.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50, choices=STATUS_PRODUCT, default="available")
