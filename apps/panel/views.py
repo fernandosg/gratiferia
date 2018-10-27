@@ -96,6 +96,11 @@ class RequestsProductDetailView(View):
             return self.kwargs["id"]
         return None
 
+
+    def send_message_from_author_for_request_confirmed(self, user_request, contact_product):
+        content = "Hola {}, he visto tu solicitud y te confirmo la posibilidad de ponernos en contacto. Por favor, ponte en contacto conmigo por los siguientes medios: {}.".format(user_request.name, contact_product)
+        Message.objects.create(from_user=self.request.user, to_user=user_request, content=content)
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         request_product = RequestProduct.objects.filter(id=self.id).first()
@@ -104,6 +109,7 @@ class RequestsProductDetailView(View):
         return render(request, "panel/requests/detail.html", locals())
 
     def _confirm_deliver(self, post, request_product):
+        self.send_message_from_author_for_request_confirmed(request_product.user, request_product.product.contact)
         request_product.product.confirm_deliver()
 
     def _confirm_received(self, post, request_product):
