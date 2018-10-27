@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import ProductForm, ImageForm
 from .models import Product, ImageProduct, RequestProduct
 from apps.users.models import User
+from apps.inbox.models import Message
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
@@ -27,6 +28,10 @@ class ProductRequestView(View):
             return self.kwargs["slug"]
         return None
 
+    def send_message_to_author_for_request_product(self, author_product, title_product):
+        content = "Hola me interesa el producto {}, estoy solicitando el producto. Puedes revisar en tu panel en la sección de Solicitudes mi solicitud.".format(title_product)
+        Message.objects.create(from_user=self.request.user, to_user=author_product, content=content)
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         if self.slug is None:
@@ -37,8 +42,9 @@ class ProductRequestView(View):
         if product.is_not_available():
             messages.error(request, "Este producto no esta disponible para solicitar")
         else:
-            request = RequestProduct.objects.create(product=product, user=request.user)
-            request.product.request_product()
+            request_product = RequestProduct.objects.create(product=product, user=request.user)
+            request_product.product.request_product()
+            self.send_message_to_author_for_request_product(product.author, product.name)
             messages.success(request, "Producto solicitado con éxito")
         return render(request, "products/detail.html", locals())
 
