@@ -101,6 +101,10 @@ class RequestsProductDetailView(View):
         content = "Hola {}, he visto tu solicitud y te confirmo la posibilidad de ponernos en contacto. Por favor, ponte en contacto conmigo por los siguientes medios: {}.".format(user_request.name, contact_product)
         Message.objects.create(from_user=self.request.user, to_user=user_request, content=content)
 
+    def send_message_to_author_for_product_received_confirmed(self, author_product):
+        content = "Hola {}, confirmo la recepción del producto, el cual ya no podrá ser solicitado por otra persona. Gracias por hacer entrega del producto.".format(author_product)
+        Message.objects.create(from_user=self.request.user, to_user=author_product, content=content)
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         request_product = RequestProduct.objects.filter(id=self.id).first()
@@ -113,6 +117,7 @@ class RequestsProductDetailView(View):
         request_product.product.confirm_deliver()
 
     def _confirm_received(self, post, request_product):
+        self.send_message_to_author_for_product_received_confirmed(request_product.product.author)
         request_product.product.confirm_received()
 
     @method_decorator(login_required)
