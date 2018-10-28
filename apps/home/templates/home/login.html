@@ -2,8 +2,8 @@
 {% block content %}
   <form method="post" action="">
     {% csrf_token %}
-    <input type="email" name="email" placeholder="Escribe el email" />
-    <input type="password" name="password" placeholder="Escribe la contraseña" />
+    <input id="email" type="email" name="email" placeholder="Escribe el email" />
+    <input id="password" type="password" name="password" placeholder="Escribe la contraseña" />
     <input type="submit" value="Entrar"/>
   </form>
 {% endblock %}

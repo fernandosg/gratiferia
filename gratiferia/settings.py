@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.home',
     'apps.inbox',
     'apps.panel',
+    'tests.views',
 ]
 
 MIDDLEWARE = [
