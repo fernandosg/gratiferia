@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% for report_product in reports_product %}
+    <div>
+      <form action="" method="post">
+        {% csrf_token %}
+        <span>{{report_product.product.name}}</span>
+        <input type="hidden" name="product_id" value="{{report_product.product.id}}"/>
+        <a href="{% url 'product_detail' slug=report_product.product.slug %}" target="_blank">Ver producto</a>
+        <input type="submit" value="Deshabilitar producto"/>
+      </form>
+    </div>
+  {% endfor %}
+{% endblock %}

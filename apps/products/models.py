@@ -18,6 +18,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50, choices=STATUS_PRODUCT, default="available")
+    visible = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -52,6 +53,7 @@ class ReportProduct(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
+    reviewed = models.BooleanField(default=False)
 
 
 class RequestProduct(models.Model):
