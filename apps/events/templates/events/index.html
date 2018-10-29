@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% for event in events %}
+    <p>{{event.description}} <a href="{% url 'event_detail' id=event.id%}">Ver evento</a></p>
+  {% endfor %}
+{% endblock %}

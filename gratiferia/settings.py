@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.home',
     'apps.inbox',
     'apps.panel',
+    'apps.events',
     'tests.views',
 ]
 

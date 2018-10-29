@@ -22,6 +22,7 @@ urlpatterns = [
     path("", include('apps.home.urls')),
     path("dashboard/", include("apps.dashboard.urls")),
     path("products/", include("apps.products.urls")),
+    path("events/", include("apps.events.urls")),
     path("panel/", include("apps.panel.urls")),
     path("profile/", include("apps.users.urls")),
 ]
