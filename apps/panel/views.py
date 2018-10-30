@@ -108,7 +108,7 @@ class RequestsProductDetailView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         request_product = RequestProduct.objects.filter(id=self.id).first()
-        if request_product.user.id != request.user.id and request_product.product.author.id != request.user.id:
+        if request_product.user.id != request.user.id and request_product.product.author.id != request.user.id or request_product.is_cancel:
             return HttpResponseForbidden()
         return render(request, "panel/requests/detail.html", locals())
 
@@ -120,6 +120,9 @@ class RequestsProductDetailView(View):
         self.send_message_to_author_for_product_received_confirmed(request_product.product.author)
         request_product.product.confirm_received()
 
+    def _cancel_request(self, post, request_product):
+        request_product.cancel()
+
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         post = request.POST.copy()
@@ -130,4 +133,7 @@ class RequestsProductDetailView(View):
             self._confirm_deliver(post, request_product)
         elif post["action_request"] == "confirm_received" and request_product.user.id == request.user.id:
             self._confirm_received(post, request_product)
+        elif post["action_request"] == "cancel_request":
+            self._cancel_request(post, request_product)
+            return redirect(reverse("product_detail", kwargs={"slug": request_product.product.slug}))
         return render(request, "panel/requests/detail.html", locals())

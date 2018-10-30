@@ -40,6 +40,10 @@ class Product(models.Model):
         self.status = "requested_deliver"
         self.save()
 
+    def set_available(self):
+        self.status = 'available'
+        self.save()
+
 class Image(models.Model):
     file = models.ImageField(upload_to="product_images/")
 
@@ -59,3 +63,9 @@ class ReportProduct(models.Model):
 class RequestProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="requests_product")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests_users")
+    is_cancel = models.BooleanField(default=False)
+
+    def cancel(self):
+        self.is_cancel = True
+        self.product.set_available()
+        self.save()
