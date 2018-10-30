@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<h1 id="inbox_title">Bandeja de entrada</h1>
 {% for message in messages %}
   <p>{{message.content}}</p>
 {% endfor %}

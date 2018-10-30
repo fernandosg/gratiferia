@@ -4,9 +4,9 @@
   {% for response in message.response_message.all %}
     <p>{{response.content}} escrito por {{response.from_user}}</p>
   {% endfor %}
-  <form method="post" action="">
+  <form id="form-message" method="post" action="">
     {% csrf_token %}
-    <textarea name="content" placeholder="Escribe tu respuesta"></textarea>
+    <textarea id="content" name="content" placeholder="Escribe tu respuesta"></textarea>
     <input type="submit" value="Enviar" />
   </form>
 {% endblock %}

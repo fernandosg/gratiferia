@@ -2,8 +2,8 @@
 {% block content %}
   <form method="post" action="">
     {% csrf_token %}
-    <textarea name="content" placeholder="Escribe el mensaje"></textarea>
-    <input type="hidden" name="to_user" value="{{to_user}}"/>
-    <input type="submit" value="Enviar"/>
+    <textarea id="content" name="content" placeholder="Escribe el mensaje"></textarea>
+    <input id="to_user" type="hidden" name="to_user" value="{{to_user}}"/>
+    <input id="send" type="submit" value="Enviar"/>
   </form>
 {% endblock %}
