@@ -11,6 +11,30 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 
 # Create your views here.
+class ProductIndexView(View):
+
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.all()[:10]
+        return render(request, "products/index.html", locals())
+
+
+class ProductsByCategoryView(View):
+
+    @property
+    def category(self):
+        if "category" in self.kwargs:
+            return self.kwargs["category"]
+        return None
+
+    def get(self, request, *args, **kwargs):
+        category = self.category
+        if category is None:
+            return HttpResponseForbidden()
+        category = Category.objects.filter(slug=self.category)
+        products = Product.objects.filter(category=category).all()[:10]
+        return render(request, "products/category.html", locals())
+
+
 class ProductDetailView(View):
 
     def get(self, request, *args, **kwargs):

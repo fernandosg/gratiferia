@@ -7,6 +7,12 @@ STATUS_PRODUCT = (("available", "Available"), ("requested_not_confirmed", "Solic
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.CharField(max_length=100, blank=True, null=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+        
 
 class Product(models.Model):
     name = models.CharField(max_length=255)

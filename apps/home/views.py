@@ -4,14 +4,24 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
+from apps.products.models import Product
+from apps.events.models import Event
 from apps.users.models import User
 
 # Create your views here.
 class HomeView(View):
 
     def get(self, request, *args, **kwargs):
+        last_products = Product.objects.filter(visible=True).all()
+        last_event = Event.last_event(None)
         return render(request, "home/index.html", locals())
 
+
+
+class AboutusView(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, "home/about.html", locals())
 
 class SignupView(View):
 
