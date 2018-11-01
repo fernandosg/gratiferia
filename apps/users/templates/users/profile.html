@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-  <h2>Usuario: {{user.name}}</h2>
-  <a href="{% url 'inbox_create' user=user.id %}">Enviar mensaje</a>
-  <div>
-    <h3>Productos publicados</h3>
-    {% for product in products_published %}
-      <p>
-        <a href="{% url 'product_detail' slug=product.slug %}">{{product.title}}</a>
-      </p>
-    {% endfor %}
+<div class="row">
+  <div class="col-8">
+    <h2>Usuario: {{user.name}}</h2>
+    <a href="{% url 'inbox_create' user=user.id %}">Enviar mensaje</a>
+    <div>
+      <p>Total de productos publicados: {{user.count_products}}</p>
+    </div>
   </div>
-  <div>
-    <h3>Productos solicitados</h3>
-    {% for request in products_requested %}
-      <p>
-        <a href="{% url 'product_detail' slug=request.product.slug %}">{{product.title}}</a>
-      </p>
-    {% endfor %}
+  <div class="col-4">
+    <div>
+      <h3>Productos publicados</h3>
+      <div class="row">
+        {% for product in products_published %}
+          <div class="col-6">
+            {% include 'products/_product_detail.html' %}
+          </div>
+        {% endfor %}
+        <br/>
+        {% if total_products_published > 4 %}
+          <a href="{% url 'user_products' user_id=user.id %}">Ver todos</a>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

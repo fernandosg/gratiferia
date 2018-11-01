@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-from apps.products.models import RequestProduct, Product
+from django.http import HttpResponseForbidden
+from apps.products.models import RequestProduct, Product, Category
+from apps.users.models import User
 
 # Create your views here.
 class ProfileView(View):
@@ -12,6 +14,28 @@ class ProfileView(View):
         return None
 
     def get(self, request, *args, **kwargs):
-        products_published = Product.objects.filter(author__id=self.user_id).all()
-        products_requested = RequestProduct.objects.filter(user__id=self.user_id).all()
+        if self.user_id is None:
+            return HttpResponseForbidden()
+        user = User.objects.filter(id=self.user_id).first()
+        result = Product.objects.filter(author__id=user.id)
+        products_published = result.all()[:4]
+        total_products_published = result.count()
         return render(request, "users/profile.html", locals())
+
+
+class UserProductsView(View):
+
+    @property
+    def user_id(self):
+        if "user_id" in self.kwargs:
+            return self.kwargs["user_id"]
+        return None
+
+    def get(self, request, *args, **kwargs):
+        if self.user_id is None:
+            return HttpResponseForbidden()
+        user = User.objects.filter(id=self.user_id).first()
+        categories = Category.objects.order_by("name").all()
+        products = Product.objects.filter(author=user).all()
+        title = "Productos del usuario {}".format(user.name)
+        return render(request, "products/products_list.html", locals())

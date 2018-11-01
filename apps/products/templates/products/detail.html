@@ -1,10 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
-  <p>{{product.name}}</p>
-  <p><a id="link-to-request" href="{% url 'product_request' slug=product.slug %}">Solicitar</a></p>
-  {% for image in product.product_images.all %}
-    <p>
-      <img src="{{image.image.file.url}}" style="max-width:300px;" />
-    </p>
-  {% endfor %}
+  <section class="row">
+    <div class="col-4">
+      <div class="row">
+        <div class="col-12">
+          <img src="{{product.first_image}}" style="width:100%" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        {% for resource in product.all_images %}
+          <div class="col-3">
+            <img src="{{resource.image.file.url}}" style="width:100%;" />
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-12">
+          <h3>{{product.name}}</h3>
+          <br/>
+          {{product.description}}
+          <br/>
+          <br/>
+          <p><a class="btn btn-primary" id="link-to-request" href="{% url 'product_request' slug=product.slug %}">Solicitar</a></p>
+        </div>
+        <section class="col-4 section-side">
+          <header class="base-section">
+            <p>Dueño</p>
+          </header>
+          <div style="padding-left:5px;">
+            <p><a href="{% url 'profile_view' user_id=product.author.id %} ">{{product.author.name}}</a></p>
+          </div>
+        </section>
+        <section class="col-8" style="text-align:right;">
+          <span>Creado el {{product.created_at}}</span>
+        </section>
+      </div>
+    </div>
+  </section>
 {% endblock %}

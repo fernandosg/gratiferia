@@ -12,7 +12,7 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-        
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -49,6 +49,18 @@ class Product(models.Model):
     def set_available(self):
         self.status = 'available'
         self.save()
+
+    @property
+    def first_image(self):
+        if self.product_images is not None:
+            return self.product_images.first().image.file.url
+        return "static/img/placeholder.gif"
+
+    @property
+    def all_images(self):
+        if self.product_images is not None:
+            return self.product_images.all()
+        return None
 
 class Image(models.Model):
     file = models.ImageField(upload_to="product_images/")
