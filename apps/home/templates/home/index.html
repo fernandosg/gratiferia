@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
+{% block css %}
+<style>
+  .container-highlight-event{
+    overflow: hidden; position: relative; min-height:250px; background: url('/static/img/bg_header.jpg'); background-position: center center; background-repeat: no-repeat; background-size: cover;
+  }
+
+  .background-degrade{
+    position: absolute; z-index:1; background-color: rgba(0,0,0,0.3); color: #fff; position: absolute; top: 0; left: 0; width: 100%; min-height: 700px;
+  }
+</style>
+{% endblock %}
 {% block content %}
+<div class="container">
   <div class="row">
     <h1>Últimos productos publicados</h1>
   </div>
@@ -10,14 +22,22 @@
       </article>
     {% endfor %}
   </div>
-  <div class="row">
+</div>
+<div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+  <div class="container">
     <div class="col-12">
       <h2>Próximo evento</h2>
-      <div class="row">
+    </div>
+  </div>
+  <div class="col-12 container-highlight-event">
+    <div class="background-degrade"></div>
+    <div class="row" style="position:absolute; z-index:2; width:100%;">
+      <div class="col-12" style="color: white; text-align:center; padding-top: 50px;">
         <h3>{{last_event.date_event}}</h3>
         <br/>
         <p>Ubicación: {{last_event.address}}</p>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
