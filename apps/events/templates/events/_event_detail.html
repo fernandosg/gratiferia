@@ -1,15 +1,17 @@
 <div class="card-event">
   <header class="row">
     <div class="col-12">
-      <img src="{{event.flyer.url}}" style="width: 100%;" />
+      <a href="{% url 'event_detail' id=event.id %}">
+        <img src="{{event.flyer.url}}" style="width: 100%; border-bottom: 3px solid #36a8f8;" />
+      </a>
     </div>
   </header>
-  <section class="row">
-    <div class="col-1">
-      <span>{{event.date_event}}</span>
+  <section class="row event">
+    <div class="col-1 date-info">
+      <span>{{event.date_event_display}}</span>
     </div>
-    <div class="col-11">
-      <p>¡Gratiferia el {{event.date_event}}!</p>
+    <div class="col-10" style="padding-left: 40px;">
+      <p><a href="{% url 'event_detail' id=event.id %}">¡Gratiferia el {{event.date_event}}!</a></p>
     </div>
   </section>
   <section class="row">
