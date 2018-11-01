@@ -52,9 +52,9 @@ class Product(models.Model):
 
     @property
     def first_image(self):
-        if self.product_images is not None:
+        if self.product_images is not None and self.product_images.first() is not None:
             return self.product_images.first().image.file.url
-        return "static/img/placeholder.gif"
+        return "/static/img/placeholder.gif"
 
     @property
     def all_images(self):

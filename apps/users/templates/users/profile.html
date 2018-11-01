@@ -3,9 +3,9 @@
 <div class="row">
   <div class="col-8">
     <h2>Usuario: {{user.name}}</h2>
-    <a href="{% url 'inbox_create' user=user.id %}">Enviar mensaje</a>
+    <a class="btn btn-primary" href="{% url 'inbox_create' user=user.id %}">Enviar mensaje</a>
     <div>
-      <p>Total de productos publicados: {{user.count_products}}</p>
+      <p>Total de productos publicados: {{total_products_published}}</p>
     </div>
   </div>
   <div class="col-4">
