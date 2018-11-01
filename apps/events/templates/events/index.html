@@ -1,8 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-  {% for event in events %}
+  <div class="row">
+    {% for event in events %}
     <div class="col-3">
       {% include 'events/_event_detail.html' %}
-    </div>    
-  {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <br>
+  <div class="row">
+      <div class="col-sm-2">
+          {% if events.has_previous %}
+              <a href="?page={{ events.previous_page_number }}" class="btn btn-outline-secondary btn-block"><i class="fas fa-chevron-left"></i> Anterior</a>
+          {%endif%}
+      </div>
+      <div class="col-sm-8 text-center">
+          Página {{ events.number }} de {{ events.paginator.num_pages }}.
+      </div>
+      <div class="col-sm-2">
+          {% if events.has_next %}
+              <a  href="?page={{ events.next_page_number }}" class="btn btn-outline-secondary btn-block"> Siguiente <i class="fas fa-chevron-right"></i></a>
+          {%endif%}
+      </div>
+  </div>
+  <br>
 {% endblock %}

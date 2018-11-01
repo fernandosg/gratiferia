@@ -9,6 +9,23 @@
         </article>
       {% endfor %}
     </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-2">
+            {% if products.has_previous %}
+                <a href="?page={{ products.previous_page_number }}" class="btn btn-outline-secondary btn-block"><i class="fas fa-chevron-left"></i> Anterior</a>
+            {%endif%}
+        </div>
+        <div class="col-sm-8 text-center">
+            Página {{ products.number }} de {{ products.paginator.num_pages }}.
+        </div>
+        <div class="col-sm-2">
+            {% if products.has_next %}
+                <a  href="?page={{ products.next_page_number }}" class="btn btn-outline-secondary btn-block"> Siguiente <i class="fas fa-chevron-right"></i></a>
+            {%endif%}
+        </div>
+    </div>
+    <br>
   </section>
   {% include 'products/_sidebar.html' %}
 </div>

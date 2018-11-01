@@ -3,12 +3,17 @@ from django.views import View
 from datetime import datetime
 from .models import Event
 from django.http import HttpResponseForbidden
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 class EventListView(View):
 
     def get(self, request, *args, **kwargs):
-        events = Event.objects.filter(date_event__gte=datetime.now()).all()
+        events_list = Event.objects.filter(date_event__gte=datetime.now()).all()
+        title = "Lista de eventos"
+        page = request.GET.get("page")
+        paginator = Paginator(events_list, 4)
+        events = paginator.get_page(page)
         return render(request, "events/index.html", locals())
 
 

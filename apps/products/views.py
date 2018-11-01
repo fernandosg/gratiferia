@@ -10,12 +10,16 @@ from apps.products.models import Category
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 class ProductIndexView(View):
 
     def get(self, request, *args, **kwargs):
-        products = Product.objects.all()[:10]
+        products_list = Product.objects.all()
+        page = request.GET.get("page")
+        paginator = Paginator(products_list, 4)
+        products = paginator.get_page(page)
         categories = Category.objects.order_by("name").all()
         return render(request, "products/products_list.html", locals())
 
@@ -34,7 +38,10 @@ class ProductsByCategoryView(View):
             return HttpResponseForbidden()
         category = Category.objects.filter(slug=self.slug).first()
         categories = Category.objects.order_by("name").all()
-        products = Product.objects.filter(category=category).all()[:10]
+        products_list = Product.objects.filter(category=category).all()[:10]
+        page = request.GET.get("page")
+        paginator = Paginator(products_list, 4)
+        products = paginator.get_page(page)
         title = "Productos de la categoría {}".format(category.name)
         return render(request, "products/products_list.html", locals())
 
