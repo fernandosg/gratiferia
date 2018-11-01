@@ -1,0 +1,14 @@
+<aside class="col-md-3 col-12" style="padding-left:30px;">
+  <div class="row">
+    <section class="col-12 section-side">
+      <header style="background-color:blue; border-radius:4px;">
+        <p style="color:white; padding: 3px 5px;">Categorías</p>
+      </header>
+      <div style="padding: 0px 15px;">
+        {% for category in categories %}
+          <p><a href="{% url 'products_by_category' slug=category.slug %}">{{category.name}}</a></p>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</aside>

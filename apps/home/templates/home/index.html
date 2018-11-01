@@ -1,13 +1,4 @@
 {% extends 'base.html' %}
-{% block css %}
-<style>
-  .card-product{
-    padding: 10px 5px;
-    border: 1px solid #dfdfdf;
-    border-radius: 4px;
-  }
-</style>
-{% endblock %}
 {% block content %}
   <div class="row">
     <h1>Últimos productos publicados</h1>
@@ -15,26 +6,7 @@
   <div class="row">
     {% for product in last_products %}
       <article class="col-4" style="padding:5px;">
-        <div class="card-product">
-          <header class="row">
-              <div class="col-12">
-                {% if product.have_images %}
-                  <img src="{{product.first_image.url}}"/>
-                {% else %}
-                  <img src="{{STATIC_URL}}static/img/placeholder.gif" style="width:100%;"/>
-                {% endif %}
-              </div>
-          </header>
-          <section class="row">
-            <div class="col-md-8">
-              <h2><a href="{% url 'product_detail' slug=product.slug  %}">{{product.title}}</a></h2>
-              <p><small>Creado el {{product.created_at}}</small></p>
-            </div>
-            <div class="col-md-4">
-              <p>Categoría <a href="{% url 'products_by_category' slug=product.category.slug %}">{{product.category.name}}</a></p>
-            </div>
-          </section>
-        </div>
+        {% include 'products/_product_detail.html' %}
       </article>
     {% endfor %}
   </div>

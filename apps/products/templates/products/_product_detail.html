@@ -1,0 +1,22 @@
+<div class="card-product">
+  <header class="row">
+    <div class="col-12">
+      <a href="{% url 'product_detail' slug=product.slug %}">
+        {% if product.have_images %}
+        <img src="{{product.first_image.url}}"/>
+        {% else %}
+        <img src="{{STATIC_URL}}/static/img/placeholder.gif" style="width:100%;"/>
+        {% endif %}
+      </a>
+    </div>
+  </header>
+  <section class="row">
+    <div class="col-12">
+      <h3><a href="{% url 'product_detail' slug=product.slug  %}">{{product.name}}</a></h3>
+      <p><small>Creado el {{product.created_at}}</small></p>
+    </div>
+    <div class="col-12">
+      <p>Categoría <a href="{% url 'products_by_category' slug=product.category.slug %}">{{product.category.name}}</a></p>
+    </div>
+  </section>
+</div>

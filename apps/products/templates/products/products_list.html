@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <section class="col-md-9 col-12">
+    <div class="row">
+      {% for product in products %}
+        <article class="col-4" style="padding:5px;">
+          {% include 'products/_product_detail.html' %}
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% include 'products/_sidebar.html' %}
+</div>
+{% endblock %}

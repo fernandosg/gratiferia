@@ -6,6 +6,7 @@ from .forms import ProductForm, ImageForm
 from .models import Product, ImageProduct, RequestProduct
 from apps.users.models import User
 from apps.inbox.models import Message
+from apps.products.models import Category
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
@@ -15,32 +16,34 @@ class ProductIndexView(View):
 
     def get(self, request, *args, **kwargs):
         products = Product.objects.all()[:10]
-        return render(request, "products/index.html", locals())
+        categories = Category.objects.order_by("name").all()
+        return render(request, "products/products_list.html", locals())
 
 
 class ProductsByCategoryView(View):
 
     @property
-    def category(self):
-        if "category" in self.kwargs:
-            return self.kwargs["category"]
+    def slug(self):
+        if "slug" in self.kwargs:
+            return self.kwargs["slug"]
         return None
 
     def get(self, request, *args, **kwargs):
-        category = self.category
+        category = self.slug
         if category is None:
             return HttpResponseForbidden()
-        category = Category.objects.filter(slug=self.category)
+        category = Category.objects.filter(slug=self.slug).first()
+        categories = Category.objects.order_by("name").all()
         products = Product.objects.filter(category=category).all()[:10]
-        return render(request, "products/category.html", locals())
+        title = "Productos de la categoría {}".format(category.name)
+        return render(request, "products/products_list.html", locals())
 
 
 class ProductDetailView(View):
 
     def get(self, request, *args, **kwargs):
         product = Product.objects.filter(slug=kwargs["slug"]).first()
-        for image in product.product_images.all():
-            print(image.image.file.url)
+        title = "Producto {}".format(product.name)
         return render(request, "products/detail.html", locals())
 
 
@@ -70,6 +73,7 @@ class ProductRequestView(View):
             request_product.product.request_product()
             self.send_message_to_author_for_request_product(product.author, product.name)
             messages.success(request, "Producto solicitado con éxito")
+        title = "Producto {}".format(product.name)
         return render(request, "products/detail.html", locals())
 
 class ProductCreateView(View):
