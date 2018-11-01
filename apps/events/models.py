@@ -8,7 +8,7 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     address = models.TextField()
-    flyer = models.ImageField(upload_to="event_flyer", blank=True, null=True)
+    flyer = models.ImageField(upload_to="event_flyer", default='static/img/placeholder.gif')
 
     def last_event(self):
         return Event.objects.filter(date_event__gte=datetime.now()).first()
