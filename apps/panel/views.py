@@ -109,6 +109,7 @@ class RequestsProductDetailView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         request_product = RequestProduct.objects.filter(id=self.id).first()
+        title = "Detalle de la solicitud del producto {}".format(request_product.product.name)
         if request_product.user.id != request.user.id and request_product.product.author.id != request.user.id or request_product.is_cancel:
             return HttpResponseForbidden()
         return render(request, "panel/requests/detail.html", locals())
@@ -128,6 +129,7 @@ class RequestsProductDetailView(View):
     def post(self, request, *args, **kwargs):
         post = request.POST.copy()
         request_product = RequestProduct.objects.filter(id=self.id).first()
+        title = "Detalle de la solicitud del producto {}".format(request_product.product.name)
         if request_product.user.id != request.user.id and request_product.product.author.id != request.user.id:
             return HttpResponseForbidden()
         if post["action_request"] == "confirm_deliver" and request_product.product.author.id == request.user.id:

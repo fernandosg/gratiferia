@@ -62,6 +62,13 @@ class Product(models.Model):
             return self.product_images.all()
         return None
 
+    @property
+    def status_label(self):
+        for status in STATUS_PRODUCT:
+            if status[0] == self.status:
+                return status[1]
+        return self.status
+
 class Image(models.Model):
     file = models.ImageField(upload_to="product_images/")
 
