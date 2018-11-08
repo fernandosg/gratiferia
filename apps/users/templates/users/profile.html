@@ -2,23 +2,7 @@
 {% block content %}
 <div class="row">
   {%if request.user.is_authenticated and request.user.id == user.id %}
-  <div class="col-12">
-    <div class="row">
-      <div class="col-8 navbar navbar-expand-lg navbar-light bg-ligh" style="margin: 0 auto;">
-        <ul class="navbar-nav mr-auto" style="margin: 0 auto;">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}">Mis datos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'inbox_index' %}">Mensajes privados</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'requests_product_received' %}">Solicitudes de productos</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  {% include 'users/_nav_profile.html' %}
   {% endif %}
   <div class="col-8">
     <h2>Usuario: {{user.name}}</h2>

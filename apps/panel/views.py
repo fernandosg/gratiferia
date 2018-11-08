@@ -83,8 +83,9 @@ class RequestsProductReceivedView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        requests_product = RequestProduct.objects.filter(user__id=request.user.id).all()
-        print(requests_product)
+        requests_product = RequestProduct.objects.filter(product__author__id=request.user.id).all()
+        requests_product_made = RequestProduct.objects.filter(user__id=request.user.id).all()
+        title = "Solicitudes de productos"
         return render(request, "panel/requests/received.html", locals())
 
 
