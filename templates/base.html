@@ -54,6 +54,12 @@
       color: #36a8f8;
       font-weight: bold;
     }
+
+    .options_socialnetwork li{
+        list-style: none;
+        display: inline-block;
+
+    }
   </style>
   {% block css %}
   {% endblock %}
@@ -119,15 +125,15 @@
       </div>
       <div class="col-6">
         <p>Nuestras redes sociales</p>
-        <ul class="options_socialnetwork">
-          <li><a href="http://www.facebook.com/gratiferiamx">Facebook</a></li>
-          <li><a href="http://www.facebook.com/gratiferiamx">Twitter</a></li>
-          <li><a href="http://www.facebook.com/gratiferiamx">Instagram</a></li>
+        <ul class="options_socialnetwork" style="text-align:center;">
+          <li><a href="http://www.facebook.com/gratiferiamx"><i class="fab fa-facebook-f"></i></a></li>
+          <li style="margin-left:10px;"><a href="http://www.facebook.com/gratiferiamx"><i class="fab fa-twitter"></i></a></li>
         </ul>
       </div>
     </div>
   </footer>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script defer src="https://fondify-media.s3-us-west-2.amazonaws.com/fontawesome/js/fontawesome-all.js"></script>
   <script src="{{STATIC_URL}}/static/js/bootstrap.min.js"></script>
   {% block js %}
   {% endblock %}
