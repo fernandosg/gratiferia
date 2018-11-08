@@ -15,8 +15,12 @@ class ProfileView(View):
 
     def get(self, request, *args, **kwargs):
         if self.user_id is None:
-            return HttpResponseForbidden()
-        user = User.objects.filter(id=self.user_id).first()
+            if request.user is not None:
+                user = request.user
+            else:
+                return HttpResponseForbidden()
+        else:
+            user = User.objects.filter(id=self.user_id).first()
         result = Product.objects.filter(author__id=user.id)
         products_published = result.all()[:4]
         total_products_published = result.count()
