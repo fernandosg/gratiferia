@@ -4,7 +4,7 @@
   {% include 'users/_nav_profile.html' %}
   {% include 'panel/inbox/_nav_menu.html' %}
   <section class="col-8">
-    <h1 id="inbox_title">Bandeja de entrada</h1>
+    <h1 id="inbox_title">Bandeja de salida</h1>
     {% for message in messages %}
       <a href="{% url 'inbox_detail' id=message.id %}"><p style="padding: 10px 30px;border: 1px solid #dfe2e5;">{{message.content}} enviado por {{message.from_user.name}}</p></a>
     {% endfor %}

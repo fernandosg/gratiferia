@@ -1,10 +1,10 @@
 <aside class="col-4">
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link {% if option == 'received' %} active {% endif %}" href="#">Bandeja de entrada</a>
+      <a class="nav-link {% if option == 'received' %} active {% endif %}" href="{% url 'inbox_index' %}">Bandeja de entrada</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% if option == 'send' %} active {% endif %}" href="#">Bandeja de salida</a>
+      <a class="nav-link {% if option == 'send' %} active {% endif %}" href="{% url 'inbox_send' %}">Bandeja de salida</a>
     </li>
   </ul>
 </aside>
