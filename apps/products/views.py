@@ -50,6 +50,8 @@ class ProductDetailView(View):
 
     def get(self, request, *args, **kwargs):
         product = Product.objects.filter(slug=kwargs["slug"]).first()
+        if product.status == 'requested_deliver':
+            return HttpResponseForbidden()
         title = "Producto {}".format(product.name)
         return render(request, "products/detail.html", locals())
 
