@@ -16,8 +16,17 @@ class InboxIndexView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         messages = ResponseMessage.objects.filter(to_user=request.user).order_by("created_at").all()
+        option = "received"
         return render(request, "panel/inbox/index.html", locals())
 
+
+class InboxSendView(View):
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        messages = Message.objects.filter(from_user=request.user).order_by("created_at").all()
+        option = "send"
+        return render(request, "panel/inbox/send.html", locals())
 
 class MessageDetailView(View):
 
