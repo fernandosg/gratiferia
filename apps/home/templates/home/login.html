@@ -7,7 +7,7 @@
         <div style="text-align:center;">
           <h1>Ingresa a tu cuenta</h1>
         </div>
-        <div style="text-align:center;">
+        <div style="text-align:center; margin: 10px 0px;">
           <form method="post" action="">
             {% csrf_token %}
             <div class="form-group">
@@ -21,7 +21,7 @@
             <input class="btn btn-success" type="submit" value="Entrar"/>
           </form>
         </div>
-        <div style="text-align:center;">
+        <div style="text-align:center; margin: 50px 0px;">
           <h2>¿No tienes una cuenta?</h2>
           <div>
             <a class="btn btn-primary" href="{% url 'signup' %}">Crea una cuenta</a>
