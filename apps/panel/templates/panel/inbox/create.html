@@ -4,6 +4,7 @@
     {% include 'users/_nav_profile.html' %}
     {% include 'panel/inbox/_nav_menu.html' %}
     <section class="col-8">
+      <h2>Enviar mensaje</h2>
       <form method="post" action="">
         {% csrf_token %}
         <textarea id="content" name="content" placeholder="Escribe el mensaje"></textarea>

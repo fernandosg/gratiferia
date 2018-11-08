@@ -21,6 +21,7 @@ class ProfileView(View):
                 return HttpResponseForbidden()
         else:
             user = User.objects.filter(id=self.user_id).first()
+        title = "Perfil del usuario {}".format(user.name)
         result = Product.objects.filter(author__id=user.id)
         products_published = result.all()[:4]
         total_products_published = result.count()

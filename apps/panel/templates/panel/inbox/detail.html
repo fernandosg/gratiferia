@@ -9,7 +9,7 @@
           <p>{{message.content}}</p>
         </div>
         <div class="col-12">
-          <p>Enviado por: {{message.from_user.name}}</p>
+          <p>Enviado por: <a href="{% url 'profile_view' user_id=message.from_user.id %}">{{message.from_user.name}}</a></p>
         </div>
       </div>
       <div class="row">
@@ -26,7 +26,7 @@
         <h2 class="col-12">Respuestas</h2>
         <div class="col-12">
           {% for response in message.response_message.all %}
-          <p>{{response.content}} escrito por {{response.from_user}}</p>
+          <p>{{response.content}} escrito por <a href="{% url 'profile_view' user_id=response.from_user.id %}">{{response.from_user}}</a></p>
           {% endfor %}
         </div>
       </div>

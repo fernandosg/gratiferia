@@ -69,6 +69,7 @@ class MessageCreateView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         to_user = self.user
+        title = "Enviar mensaje a {}".format(User.objects.filter(id=to_user).first().name)
         return render(request, "panel/inbox/create.html", locals())
 
     @method_decorator(login_required)
