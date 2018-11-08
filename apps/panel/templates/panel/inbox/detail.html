@@ -1,12 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-  <p>{{message.content}}</p>
-  {% for response in message.response_message.all %}
-    <p>{{response.content}} escrito por {{response.from_user}}</p>
-  {% endfor %}
-  <form id="form-message" method="post" action="">
-    {% csrf_token %}
-    <textarea id="content" name="content" placeholder="Escribe tu respuesta"></textarea>
-    <input type="submit" value="Enviar" />
-  </form>
+  <div class="row">
+    {% include 'users/_nav_profile.html' %}
+    {% include 'panel/inbox/_nav_menu.html' %}
+    <section class="col-8">
+      <div class="row">
+        <div class="col-12" style="padding: 10px 30px;border: 1px solid #dfe2e5;">
+          <p>{{message.content}}</p>
+        </div>
+        <div class="col-12">
+          <p>Enviado por: {{message.from_user.name}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <h2 class="col-12">Escribe tu respuesta:</h2>
+        <div class="col-12">
+          <form id="form-message" method="post" action="">
+            {% csrf_token %}
+            <textarea id="content" name="content" placeholder="Escribe tu respuesta"></textarea>
+            <input class="btn btn-success" type="submit" value="Enviar" />
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <h2 class="col-12">Respuestas</h2>
+        <div class="col-12">
+          {% for response in message.response_message.all %}
+          <p>{{response.content}} escrito por {{response.from_user}}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </div>
 {% endblock %}

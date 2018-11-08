@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-  <form method="post" action="">
-    {% csrf_token %}
-    <textarea id="content" name="content" placeholder="Escribe el mensaje"></textarea>
-    <input id="to_user" type="hidden" name="to_user" value="{{to_user}}"/>
-    <input id="send" type="submit" value="Enviar"/>
-  </form>
+  <div class="row">
+    {% include 'users/_nav_profile.html' %}
+    {% include 'panel/inbox/_nav_menu.html' %}
+    <section class="col-8">
+      <form method="post" action="">
+        {% csrf_token %}
+        <textarea id="content" name="content" placeholder="Escribe el mensaje"></textarea>
+        <input id="to_user" type="hidden" name="to_user" value="{{to_user}}"/>
+        <input class="btn btn-success" id="send" type="submit" value="Enviar"/>
+      </form>
+    </section>
+  </div>
 {% endblock %}
