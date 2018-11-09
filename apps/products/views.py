@@ -75,8 +75,6 @@ class ProductRequestView(View):
         product = Product.objects.filter(slug=self.slug).first()
         if RequestProduct.objects.filter(product=product, user=request.user).exists():
             messages.error(request, "Ya has solicitado este producto")
-        if product.is_not_available():
-            messages.error(request, "Este producto no esta disponible para solicitar")
         else:
             request_product = RequestProduct.objects.create(product=product, user=request.user)
             request_product.product.request_product()

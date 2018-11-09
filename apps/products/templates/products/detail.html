@@ -18,13 +18,18 @@
     </div>
     <div class="col-8">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12" style="padding-bottom: 40px;">
           <h3>{{product.name}}</h3>
+          <p><small>Categoría: <a href="{% url 'products_by_category' slug=product.category.slug %}">{{product.category.name}}</a></small></p>
           <br/>
           {{product.description}}
           <br/>
           <br/>
-          <p><a class="btn btn-primary" id="link-to-request" href="{% url 'product_request' slug=product.slug %}">Solicitar</a></p>
+          {% if request.user.is_authenticated %}
+            <p><a class="btn btn-primary" id="link-to-request" href="{% url 'product_request' slug=product.slug %}">Solicitar</a></p>
+          {% else %}
+            <p><a class="btn btn-primary" id="link-to-request" href="{% url 'login' %}">¿Te gustaría adquirir este producto? Ingresa a tu cuenta</a></p>
+          {% endif %}
         </div>
         <section class="col-4 section-side">
           <header class="base-section">
