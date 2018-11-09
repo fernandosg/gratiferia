@@ -32,4 +32,5 @@ class EventDetailView(View):
         event = Event.objects.filter(id=id).first()
         if event is None:
             return HttpResponseForbidden()
+        title = "Evento el {}".format(event.date_event.strftime("%w/%m/%Y %H:%M"))
         return render(request, "events/detail.html", locals())

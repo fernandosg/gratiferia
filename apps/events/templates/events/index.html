@@ -2,6 +2,9 @@
 {% block content %}
 {% include 'messages.html' %}
   <div class="row">
+    <div class="col-12">
+      <h2 style="text-align:center;">Próximos eventos</h2>
+    </div>
     {% for event in events %}
     <div class="col-3">
       {% include 'events/_event_detail.html' %}

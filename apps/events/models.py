@@ -23,4 +23,4 @@ class Event(models.Model):
 
     @property
     def get_hour(self):
-        return self.date_event.strftime("%HH:%MM")
+        return self.date_event.strftime("%H:%M")
