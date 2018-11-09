@@ -12,7 +12,7 @@ class EventListView(View):
         events_list = Event.objects.filter(date_event__gte=datetime.now()).all()
         title = "Lista de eventos"
         page = request.GET.get("page")
-        paginator = Paginator(events_list, 4)
+        paginator = Paginator(events_list, 12)
         events = paginator.get_page(page)
         return render(request, "events/index.html", locals())
 

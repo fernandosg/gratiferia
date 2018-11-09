@@ -18,7 +18,7 @@ class ProductIndexView(View):
     def get(self, request, *args, **kwargs):
         products_list = Product.objects.all()
         page = request.GET.get("page")
-        paginator = Paginator(products_list, 4)
+        paginator = Paginator(products_list, 12)
         products = paginator.get_page(page)
         categories = Category.objects.order_by("name").all()
         return render(request, "products/products_list.html", locals())
@@ -40,7 +40,7 @@ class ProductsByCategoryView(View):
         categories = Category.objects.order_by("name").all()
         products_list = Product.objects.filter(category=category).all()[:10]
         page = request.GET.get("page")
-        paginator = Paginator(products_list, 4)
+        paginator = Paginator(products_list, 12)
         products = paginator.get_page(page)
         title = "Productos de la categoría {}".format(category.name)
         return render(request, "products/products_list.html", locals())
