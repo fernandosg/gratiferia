@@ -21,6 +21,9 @@ class HomeView(View):
 class AboutusView(View):
 
     def get(self, request, *args, **kwargs):
+        CITY = "City Name"
+        STATE = "State"
+        OWNER = "Name of owner"
         return render(request, "home/about.html", locals())
 
 class SignupView(View):
