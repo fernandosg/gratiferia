@@ -24,6 +24,7 @@ class AboutusView(View):
         CITY = "City Name"
         STATE = "State"
         OWNER = "Name of owner"
+        title = "Acerca de"
         return render(request, "home/about.html", locals())
 
 class SignupView(View):

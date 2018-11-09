@@ -117,8 +117,10 @@
               <div class="col-12" style="text-align:center;">
                 <h2 style="text-align:center; color: #f8f8f8; line-height: 1; text-shadow: 0px 1px 0px #374683; font-weight: unset;">Publica lo que quieras o nada, toma lo que quieras o nada</h2>
                 <br/>
+                {%if request.user.is_authenticated is False %}
                 <span class="btn btn-primary">Registrate</span>
-                <span class="btn btn-primary">¿Que es este sitio?</span>
+                {% endif %}
+                <a href="{% url 'about_us' %}" class="btn btn-primary">¿Que es este sitio?</a>
               </div>
             </div>
           </section>
