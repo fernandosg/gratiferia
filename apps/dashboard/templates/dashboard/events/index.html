@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+  {% include 'messages.html' %}
   {% for event in events %}
     <p>{{event.description}} <a href="{% url 'events_edit_dashboard' id=event.id%}">Editar</a></p>
   {% endfor %}

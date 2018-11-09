@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+  {% include 'messages.html' %}
   <form action="" method="post">
     {% csrf_token %}
     {{form.as_p}}
