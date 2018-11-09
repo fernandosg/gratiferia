@@ -25,6 +25,7 @@ class AboutusView(View):
         CITY = settings.CITY_NAME
         STATE = settings.STATE_NAME
         OWNER = settings.OWNER_NAME
+        COUNTRY = settings.COUNTRY_NAME
         title = "Acerca de"
         return render(request, "home/about.html", locals())
 

@@ -139,3 +139,4 @@ LOGIN_URL = '/login/'
 CITY_NAME = "The city"
 STATE_NAME = "The state"
 OWNER_NAME = "The owner"
+COUNTRY_NAME = "The country name"
