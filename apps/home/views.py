@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
@@ -21,9 +22,9 @@ class HomeView(View):
 class AboutusView(View):
 
     def get(self, request, *args, **kwargs):
-        CITY = "City Name"
-        STATE = "State"
-        OWNER = "Name of owner"
+        CITY = settings.CITY_NAME
+        STATE = settings.STATE_NAME
+        OWNER = settings.OWNER_NAME
         title = "Acerca de"
         return render(request, "home/about.html", locals())
 

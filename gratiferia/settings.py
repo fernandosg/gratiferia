@@ -134,3 +134,8 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/login/'
+
+
+CITY_NAME = "The city"
+STATE_NAME = "The state"
+OWNER_NAME = "The owner"
