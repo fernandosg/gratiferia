@@ -16,7 +16,7 @@
       <p><small>Creado el {{product.created_at}}</small></p>
     </div>
     <div class="col-12">
-      <p>Categoría <a href="{% url 'products_by_category' slug=product.category.slug %}">{{product.category.name}}</a></p>
+      <p>Categoría: <a href="{% url 'products_by_category' slug=product.category.slug %}">{{product.category.name}}</a></p>
     </div>
   </section>
 </div>
