@@ -19,7 +19,6 @@ class ProfileView(View):
             return self.kwargs["user_id"]
         return None
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         if self.user_id is None:
             if request.user is not None:

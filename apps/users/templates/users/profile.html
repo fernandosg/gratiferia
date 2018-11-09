@@ -22,8 +22,12 @@
           </div>
         {% endfor %}
         <br/>
+      </div>
+      <div style="margin-top:30px;">
         {% if total_products_published > 4 %}
-          <a href="{% url 'user_products' user_id=user.id %}">Ver todos</a>
+        <p style="text-align:center;">
+          <a class="btn btn-outline-primary" href="{% url 'user_products' user_id=user.id %}">Ver todos</a>
+        </p>
         {% endif %}
       </div>
     </div>
