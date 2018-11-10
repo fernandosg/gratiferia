@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.views import View
+from django.conf import settings
 from datetime import datetime
 from .models import Event
 from django.http import HttpResponseForbidden
@@ -33,4 +34,5 @@ class EventDetailView(View):
         if event is None:
             return HttpResponseForbidden()
         title = "Evento el {}".format(event.date_event.strftime("%w/%m/%Y %H:%M"))
+        EVENT_URL = settings.SERVER_URL + reverse("event_detail", kwargs={"id":event.id})
         return render(request, "events/detail.html", locals())

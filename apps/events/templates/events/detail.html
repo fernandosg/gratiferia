@@ -22,7 +22,7 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                  <p>Compartir en redes sociales: <i class="fab fa-facebook-f"></i> <i class="fab fa-twitter"></i></p>
+                  <p>Compartir en redes sociales: <i id="facebookshare" class="fab fa-facebook-f"></i> <i id="twittershare" class="fab fa-twitter"></i></p>
                 </div>
               </div>
             </div>
@@ -41,4 +41,21 @@
     </div>
   </div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+setTimeout(function(){
+  $("svg#facebookshare").on("click",function(){
+    var url = "https://www.facebook.com/sharer/sharer.php?u={{EVENT_URL}}";
+    var fbpopup = window.open(url, "pop", "width=600, height=400, scrollbars=no");
+    return false;
+  });
+
+  $("svg#twittershare").on("click", function(){
+    https://twitter.com/intent/tweet?text=Hello%20world
+    var url = "https://twitter.com/intent/tweet?text=Hey!%20asiste%20a%20la%20siguiente%20gratiferia,%20{{EVENT_URL}}";
+    window.open(url, "pop", "width=600, height=400, scrollbars=no");
+  })
+}, 2000);
+</script>
 {% endblock %}
