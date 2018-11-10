@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
+{% block css %}
+<style>
+  #facebookshare{
+    cursor: pointer;
+  }
+
+  #twittershare{
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
 {% block content %}
 {% include 'messages.html' %}
 <div class="container">
